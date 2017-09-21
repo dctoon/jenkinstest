@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   parameters {
-        choice(choices: 'TEST\nPRODUCTION', description: 'Where are you deploying to?', name: 'EXTENSION_DEPLOY_TARGET_PARAM')
+      choice(choices: 'TEST\nPRODUCTION', description: 'Where are you deploying to?', name: 'EXTENSION_DEPLOY_TARGET_PARAM')
   }
 
   environment { 
@@ -10,6 +10,12 @@ pipeline {
   }
 
   stages {
+    stage('Checkout') {
+      steps {
+          checkout scm
+      }
+    }
+
     stage('Start') {
       steps {
         echo "Start builing $EXTENSION_DEPLOY_TARGET"
@@ -21,7 +27,8 @@ pipeline {
           environment name: 'EXTENSION_DEPLOY_TARGET', value: 'PRODUCTION'
       }
       steps {
-        echo 'Start Deploy'
+        sh "LAST_COMMIT=\$(git log -1 --pretty=%B)"
+        echo "Start Deploy $EXTENSION_DEPLOY_TARGET"
       }
     }
 
