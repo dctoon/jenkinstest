@@ -27,8 +27,9 @@ pipeline {
           environment name: 'EXTENSION_DEPLOY_TARGET', value: 'PRODUCTION'
       }
       steps {
-        sh "LAST_COMMIT=\$(git log -1 --pretty=%B)"
-        echo "Start Deploy $EXTENSION_DEPLOY_TARGET ($LAST_COMMIT)"
+        sh "git rev-parse --short HEAD > .git/commit-id"
+        def LAST_COMMIT_ID = readFile('.git/commit-id').trim()
+        echo "Start Deploy $EXTENSION_DEPLOY_TARGET ($LAST_COMMIT_ID)"
       }
     }
 
