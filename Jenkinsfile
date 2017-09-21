@@ -28,7 +28,7 @@ pipeline {
       }
       steps {
         sh "LAST_COMMIT=\$(git log -1 --pretty=%B)"
-        echo "Start Deploy $EXTENSION_DEPLOY_TARGET"
+        echo "Start Deploy $EXTENSION_DEPLOY_TARGET ($LAST_COMMIT)"
       }
     }
 
