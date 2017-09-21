@@ -28,7 +28,7 @@ pipeline {
       }
       steps {
         sh "git rev-parse --short HEAD > .git/commit-id"
-        def LAST_COMMIT_ID = readFile('.git/commit-id').trim()
+        LAST_COMMIT_ID = readFile('.git/commit-id').trim()
         echo "Start Deploy $EXTENSION_DEPLOY_TARGET ($LAST_COMMIT_ID)"
       }
     }
